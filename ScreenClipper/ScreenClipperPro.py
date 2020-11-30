@@ -71,14 +71,14 @@ class Window(QtWidgets.QWidget):
             self.rectangable.setGeometry(
                 self.old_rect[0],
                 self.old_rect[1],
-                event.x() - self.old_rect[0],
-                event.y() - self.old_rect[1]
+                event.x() - self.old_rect[0] + 1,
+                event.y() - self.old_rect[1] + 1
             )
             im = self.image.copy(
                 self.old_rect[0] + 2,
                 self.old_rect[1],
-                event.x() - self.old_rect[0],
-                event.y() - self.old_rect[1]
+                event.x() - self.old_rect[0] + 1,
+                event.y() - self.old_rect[1] + 1
             )
             self.rectangable.setPixmap(im)
             self.rectangable.show()

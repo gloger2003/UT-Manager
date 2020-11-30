@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import *
 
 from Translater import Translater
 from ScreenClipper import ScreenClipperPro
+from Calculator import Calculator
 
 
 
@@ -106,7 +107,7 @@ class Window(QMainWindow):
         self.setCentralWidget(self.label)
 
         self.blur = QGraphicsBlurEffect()
-        self.blur.setBlurRadius(20)
+        self.blur.setBlurRadius(100)
         self.blur.setBlurHints(QGraphicsBlurEffect.QualityHint)
         self.label.setGraphicsEffect(self.blur)
 
@@ -200,19 +201,23 @@ class Window(QMainWindow):
         self.info_label = QLabel(self)
         self.info_label.setStyleSheet('background-color: rgba(0, 0, 0, 0); color: rgb(230, 115, 0); border: 0px')
         self.info_label.setAlignment(Qt.AlignCenter)
-        self.info_label.setText('UT-Manager v0.2.6b')
+        self.info_label.setText('UT-Manager v0.2.7b')
         self.info_label.setFont(QFont('oblique', 20, QFont.Bold))
         self.button_layout.addWidget(self.info_label)
 
-        self.screenclipper_button = Button(self, 'Открыть скриншотер {PRINTSCREEN}')
+        self.screenclipper_button = Button(self, 'Скриншотер {PRINTSCREEN}')
         self.screenclipper_button.clicked.connect(lambda: self.hide('SC'))
         self.button_layout.addWidget(self.screenclipper_button)
 
-        self.translater_button = Button(self, 'Открыть переводчик {CTRL + C + SHIFT}')
+        self.translater_button = Button(self, 'Переводчик {CTRL + C + SHIFT}')
         self.translater_button.clicked.connect(lambda: self.hide('TR'))
         self.button_layout.addWidget(self.translater_button)
 
-        self.exit_button = Button(self, 'Закрыть UT-Manager {ESC}')
+        self.calculator_button = Button(self, 'Калькулятор {CTRL + ALT + SHIFT}')
+        self.calculator_button.clicked.connect(lambda: self.hide('CC'))
+        self.button_layout.addWidget(self.calculator_button)
+
+        self.exit_button = Button(self, 'Закрыть {ESC}')
         self.exit_button.clicked.connect(self.hide)
         self.button_layout.addWidget(self.exit_button)
         pass
@@ -252,6 +257,9 @@ if __name__ == "__main__":
                     App.exec_()
                 elif window.MODULE == 'SC':
                     window = ScreenClipperPro.Window(App=App)
+                    App.exec_()
+                elif window.MODULE == 'CC':
+                    window = Calculator.Window(App=App)
                     App.exec_()
             break
 
