@@ -13,7 +13,7 @@ from ScreenClipper import ScreenClipperPro
 class Button(QPushButton):
     def __init__(self, parent=None, text='TEXT'):
         super().__init__(parent=parent)
-        self.setStyleSheet('; color: white; border-radius: 10px; border: 1px solid rgb(30, 30, 30)')
+        self.setStyleSheet('background-color: rgba(100, 100, 100, 100); color: white; border-radius: 10px; border: 1px solid rgb(30, 30, 30)')
         self.setText(text)
         # self.setMinimumSize(100, 50)
         self.setFixedSize(300, 100)
@@ -27,7 +27,7 @@ class Button(QPushButton):
         self.shadow.setOffset(0, 0)
         self.setGraphicsEffect(self.shadow)
 
-        duration = 200
+        duration = 100
 
         self.anim_border = QVariantAnimation()
         self.anim_border.setStartValue(QColor(30, 30, 30))
@@ -44,6 +44,7 @@ class Button(QPushButton):
 
     def restyle_border(self, color=QColor):
         self.setStyleSheet(f'''
+            background-color: rgba(100, 100, 100, 100);
             color: white; 
             border-radius: 10px; 
             border: 1px solid rgb({color.red()}, {color.green()}, {color.blue()})
@@ -76,28 +77,32 @@ class Button(QPushButton):
 class Window(QMainWindow):
     MODULE = False
 
-    def __init__(self, App=QApplication):
+    def __init__(self, App: QApplication):
         super().__init__()
         self.App = App
 
         self.module = False
-
+        
+        scale = 200
         self.desktop = QDesktopWidget()
-        self.WIDTH   = self.desktop.width()
-        self.HEIGHT  = self.desktop.height()
+        self.WIDTH   = self.desktop.width() + scale
+        self.HEIGHT  = self.desktop.height() + scale
         
         self.setWindowFlags(Qt.CustomizeWindowHint | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.SplashScreen)
-        self.setGeometry(0, 0, self.WIDTH, self.HEIGHT)
+        self.setGeometry(-100, -100, self.WIDTH, self.HEIGHT)
         self.setWindowOpacity(0.001)
         self.setWindowIcon(QIcon(QPixmap('icon.png')))
         self.setWindowTitle('ScreenClipper Pro')
 
         self.sc = self.App.primaryScreen()
         self.image = self.sc.grabWindow(0)
+        self.image = self.image.scaled(self.WIDTH, self.HEIGHT)
 
         self.label = QLabel(self)
         self.label.setGeometry(0, 0, self.WIDTH, self.HEIGHT)
         self.label.setPixmap(self.image)
+        self.label.setAlignment(Qt.AlignCenter)
+        # self.label.setScaledContents(True)
         self.setCentralWidget(self.label)
 
         self.blur = QGraphicsBlurEffect()
@@ -106,8 +111,47 @@ class Window(QMainWindow):
         self.label.setGraphicsEffect(self.blur)
 
         self.front = QWidget(self)
-        self.front.setStyleSheet('background-color: rgba(0, 0, 0, 100)')
-        self.front.setGeometry(0, 0, self.WIDTH, self.HEIGHT)
+        self.front.setStyleSheet('''
+            background-color: rgba(10, 10, 10, 100); 
+            color: white; 
+            border-top: 1px solid qlineargradient(
+                spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                stop:0 rgba(255, 0, 0, 255), 
+                stop:0.166 rgba(255, 255, 0, 255), 
+                stop:0.333 rgba(0, 255, 0, 255), 
+                stop:0.5 rgba(0, 255, 255, 255), 
+                stop:0.666 rgba(0, 0, 255, 255), 
+                stop:0.833 rgba(255, 0, 255, 255), 
+                stop:1 rgba(255, 0, 0, 255));
+            border-bottom: 1px solid qlineargradient(
+                spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                stop:0 rgba(255, 0, 0, 255), 
+                stop:0.166 rgba(255, 255, 0, 255), 
+                stop:0.333 rgba(0, 255, 0, 255), 
+                stop:0.5 rgba(0, 255, 255, 255), 
+                stop:0.666 rgba(0, 0, 255, 255), 
+                stop:0.833 rgba(255, 0, 255, 255), 
+                stop:1 rgba(255, 0, 0, 255));
+            border-right: 1px solid qlineargradient(
+                spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                stop:0 rgba(255, 0, 0, 255), 
+                stop:0.166 rgba(255, 255, 0, 255), 
+                stop:0.333 rgba(0, 255, 0, 255), 
+                stop:0.5 rgba(0, 255, 255, 255), 
+                stop:0.666 rgba(0, 0, 255, 255), 
+                stop:0.833 rgba(255, 0, 255, 255), 
+                stop:1 rgba(255, 0, 0, 255));
+            border-left: 1px solid qlineargradient(
+                spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                stop:0 rgba(255, 0, 0, 255), 
+                stop:0.166 rgba(255, 255, 0, 255), 
+                stop:0.333 rgba(0, 255, 0, 255), 
+                stop:0.5 rgba(0, 255, 255, 255), 
+                stop:0.666 rgba(0, 0, 255, 255), 
+                stop:0.833 rgba(255, 0, 255, 255), 
+                stop:1 rgba(255, 0, 0, 255));
+        ''')
+        self.front.setGeometry(scale // 2, scale // 2, self.WIDTH - scale, self.HEIGHT - scale)
 
 
         self.anim_opacity = QVariantAnimation()
@@ -149,19 +193,26 @@ class Window(QMainWindow):
         self.front.setLayout(self.main_layout)
 
         self.button_layout = QVBoxLayout()
-        self.button_layout.setAlignment(Qt.AlignCenter)
+        self.button_layout.setAlignment(Qt.AlignCenter | Qt.AlignHCenter)
         self.button_layout.setSpacing(20)
         self.main_layout.addLayout(self.button_layout)
 
-        self.screenclipper_button = Button(self, 'Вызвать скриншотер {PRINTSCREEN}')
+        self.info_label = QLabel(self)
+        self.info_label.setStyleSheet('background-color: rgba(0, 0, 0, 0); color: rgb(230, 115, 0); border: 0px')
+        self.info_label.setAlignment(Qt.AlignCenter)
+        self.info_label.setText('UT-Manager v0.2.6b')
+        self.info_label.setFont(QFont('oblique', 20, QFont.Bold))
+        self.button_layout.addWidget(self.info_label)
+
+        self.screenclipper_button = Button(self, 'Открыть скриншотер {PRINTSCREEN}')
         self.screenclipper_button.clicked.connect(lambda: self.hide('SC'))
         self.button_layout.addWidget(self.screenclipper_button)
 
-        self.translater_button = Button(self, 'Перевести текст {CTRL + C + SHIFT}')
+        self.translater_button = Button(self, 'Открыть переводчик {CTRL + C + SHIFT}')
         self.translater_button.clicked.connect(lambda: self.hide('TR'))
         self.button_layout.addWidget(self.translater_button)
 
-        self.exit_button = Button(self, 'Закрыть {ESC}')
+        self.exit_button = Button(self, 'Закрыть UT-Manager {ESC}')
         self.exit_button.clicked.connect(self.hide)
         self.button_layout.addWidget(self.exit_button)
         pass
