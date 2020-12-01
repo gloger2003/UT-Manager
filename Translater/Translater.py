@@ -173,10 +173,9 @@ class Window(QMainWindow):
             diff = globalPos - self.__mouseMovePos
             newPos = self.mapFromGlobal(currPos + diff)
             self.move(newPos)
-
             self.__mouseMovePos = globalPos
-
         super().mouseMoveEvent(event)
+
 
     def mouseReleaseEvent(self, event):
         if self.__mousePressPos is not None:
@@ -222,6 +221,7 @@ class Window(QMainWindow):
         self.text_line_edit.setAutoFormatting(QTextEdit.AutoAll)
         self.text_line_edit.setGraphicsEffect(self.shadow_1)
         self.text_line_edit.setFont(self.global_font)
+        self.text_line_edit.setFocus()
         self.main_layout.addWidget(self.text_line_edit)
 
         self.source_text_viewer = QTextBrowser(self)

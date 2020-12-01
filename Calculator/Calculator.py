@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import *
 
 
 from .__Button__ import Button
-
+from math import *
 
 
 
@@ -84,7 +84,7 @@ class Window(QMainWindow):
 
         self.show()
         self.load_gui()
-
+        pass
 
 
     def show(self):
@@ -140,6 +140,15 @@ class Window(QMainWindow):
         super().mouseReleaseEvent(event)
 
 
+    def get_result(self):
+        text = self.line_edit.text()
+        try:
+            result = eval(text)
+        except:
+            result = 'Упс...'
+        self.line_edit.setText(str(result))
+
+
     def load_gui(self):
         self.main_layout = QVBoxLayout()
         self.main_layout.setSpacing(20)
@@ -147,13 +156,13 @@ class Window(QMainWindow):
         self.main_layout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
         self.main_frame.setLayout(self.main_layout)
 
-        blur = 10
+        blur = 20
 
         self.shadow_1 = QGraphicsDropShadowEffect()
         self.shadow_1.setBlurRadius(blur)
         self.shadow_1.setOffset(0, 0)
         self.shadow_1.setBlurRadius
-        self.shadow_1.setColor(QColor(110, 250, 0))
+        self.shadow_1.setColor(QColor(0, 0, 0))
 
         self.shadow_2 = QGraphicsDropShadowEffect()
         self.shadow_2.setBlurRadius(blur)
@@ -167,6 +176,7 @@ class Window(QMainWindow):
         self.line_edit.setGraphicsEffect(self.shadow_1)
         self.line_edit.setMinimumHeight(50)
         self.line_edit.setFont(self.global_font)
+        self.line_edit.returnPressed.connect(self.get_result)
         self.line_edit.setFocus()
         self.main_layout.addWidget(self.line_edit)
         pass
