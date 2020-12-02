@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import *
 from Translater import Translater
 from ScreenClipper import ScreenClipperPro
 from Calculator import Calculator
-
+import __Window__
 
 
 class Button(QPushButton):
@@ -248,6 +248,9 @@ if __name__ == "__main__":
         
         if True:
             print('UT Manager')
+            # window = __Window__.Window('Window', App, 600, 400)
+            # window.show()
+            # App.exec_()
             window = Window(App=App)
             App.exec_()
             
@@ -261,6 +264,7 @@ if __name__ == "__main__":
                 elif window.MODULE == 'CC':
                     window = Calculator.Window(App=App)
                     App.exec_()
+
             break
 
         time.sleep(0.1)
