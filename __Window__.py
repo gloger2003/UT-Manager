@@ -24,47 +24,62 @@ class Window(QMainWindow):
         self.setWindowTitle(name)
 
         self.main_frame = QFrame(self)
+        self.main_frame.setObjectName('main_frame')
         self.main_frame.setStyleSheet('''
-            background-color: rgb(40, 40, 40); 
-            color: white; 
-            border-top: 1px solid qlineargradient(
-                spread:pad, x1:0, y1:0, x2:1, y2:0, 
-                stop:0 rgba(255, 0, 0, 255), 
-                stop:0.166 rgba(255, 255, 0, 255), 
-                stop:0.333 rgba(0, 255, 0, 255), 
-                stop:0.5 rgba(0, 255, 255, 255), 
-                stop:0.666 rgba(0, 0, 255, 255), 
-                stop:0.833 rgba(255, 0, 255, 255), 
-                stop:1 rgba(255, 0, 0, 255));
-            border-bottom: 1px solid qlineargradient(
-                spread:pad, x1:0, y1:0, x2:1, y2:0, 
-                stop:0 rgba(255, 0, 0, 255), 
-                stop:0.166 rgba(255, 255, 0, 255), 
-                stop:0.333 rgba(0, 255, 0, 255), 
-                stop:0.5 rgba(0, 255, 255, 255), 
-                stop:0.666 rgba(0, 0, 255, 255), 
-                stop:0.833 rgba(255, 0, 255, 255), 
-                stop:1 rgba(255, 0, 0, 255));
-            border-right: 1px solid qlineargradient(
-                spread:pad, x1:0, y1:0, x2:0, y2:1, 
-                stop:0 rgba(255, 0, 0, 255), 
-                stop:0.166 rgba(255, 255, 0, 255), 
-                stop:0.333 rgba(0, 255, 0, 255), 
-                stop:0.5 rgba(0, 255, 255, 255), 
-                stop:0.666 rgba(0, 0, 255, 255), 
-                stop:0.833 rgba(255, 0, 255, 255), 
-                stop:1 rgba(255, 0, 0, 255));
-            border-left: 1px solid qlineargradient(
-                spread:pad, x1:0, y1:0, x2:0, y2:1, 
-                stop:0 rgba(255, 0, 0, 255), 
-                stop:0.166 rgba(255, 255, 0, 255), 
-                stop:0.333 rgba(0, 255, 0, 255), 
-                stop:0.5 rgba(0, 255, 255, 255), 
-                stop:0.666 rgba(0, 0, 255, 255), 
-                stop:0.833 rgba(255, 0, 255, 255), 
-                stop:1 rgba(255, 0, 0, 255));
+            QFrame {
+                background-color: rgb(40, 40, 40); 
+                color: white; 
+
+                border-top: 1px solid qlineargradient(
+                    spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                    stop:0 rgba(255, 0, 0, 255), 
+                    stop:0.166 rgba(255, 255, 0, 255), 
+                    stop:0.333 rgba(0, 255, 0, 255), 
+                    stop:0.5 rgba(0, 255, 255, 255), 
+                    stop:0.666 rgba(0, 0, 255, 255), 
+                    stop:0.833 rgba(255, 0, 255, 255), 
+                    stop:1 rgba(255, 0, 0, 255));
+
+                border-bottom: 1px solid qlineargradient(
+                    spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                    stop:0 rgba(255, 0, 0, 255), 
+                    stop:0.166 rgba(255, 255, 0, 255), 
+                    stop:0.333 rgba(0, 255, 0, 255), 
+                    stop:0.5 rgba(0, 255, 255, 255), 
+                    stop:0.666 rgba(0, 0, 255, 255), 
+                    stop:0.833 rgba(255, 0, 255, 255), 
+                    stop:1 rgba(255, 0, 0, 255));
+
+                border-right: 1px solid qlineargradient(
+                    spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                    stop:0 rgba(255, 0, 0, 255), 
+                    stop:0.166 rgba(255, 255, 0, 255), 
+                    stop:0.333 rgba(0, 255, 0, 255), 
+                    stop:0.5 rgba(0, 255, 255, 255), 
+                    stop:0.666 rgba(0, 0, 255, 255), 
+                    stop:0.833 rgba(255, 0, 255, 255), 
+                    stop:1 rgba(255, 0, 0, 255));
+
+                border-left: 1px solid qlineargradient(
+                    spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                    stop:0 rgba(255, 0, 0, 255), 
+                    stop:0.166 rgba(255, 255, 0, 255), 
+                    stop:0.333 rgba(0, 255, 0, 255), 
+                    stop:0.5 rgba(0, 255, 255, 255), 
+                    stop:0.666 rgba(0, 0, 255, 255), 
+                    stop:0.833 rgba(255, 0, 255, 255), 
+                    stop:1 rgba(255, 0, 0, 255));
+            }
         ''')
         self.setCentralWidget(self.main_frame)
+
+
+        # from qstylizer import parser
+
+        # qss = parser.parse(self.main_frame.styleSheet())
+        # qss.QFrame.backgroundColor.setValue((4, 4, 4,))
+        # print(qss.toString())
+        # self.main_frame.setStyleSheet(qss.toString())
 
         self.anim = QVariantAnimation()
         self.anim.setStartValue(0.001)
@@ -79,7 +94,7 @@ class Window(QMainWindow):
         self.anim_size.valueChanged.connect(self.setFixedSize)
 
         self.anim_move = QVariantAnimation()
-        self.anim_move.setStartValue(QPoint(self.x() - 100, -100))
+        self.anim_move.setStartValue(QPoint(self.x() - 500, -500))
         self.anim_move.setEndValue(QPoint(self.x(), 0))
         self.anim_move.setDuration(300)
         self.anim_move.valueChanged.connect(self.move)
@@ -104,6 +119,8 @@ class Window(QMainWindow):
         self.anim_size.setDirection(QVariantAnimation.Backward)
         self.anim_size.start()
 
+        self.anim_move.setStartValue(QPoint(self.x() - 500, -500))
+        self.anim_move.setEndValue(QPoint(self.x(), self.y()))
         self.anim_move.setDirection(QVariantAnimation.Backward)
         self.anim_move.start()
 
@@ -130,16 +147,22 @@ class Window(QMainWindow):
         if event.buttons() == Qt.LeftButton:
             currPos   = self.mapToGlobal(self.pos())
             globalPos = event.globalPos()
-            diff      = globalPos - self.__mouseMovePos
+            try:
+                diff  = globalPos - self.__mouseMovePos
+            except AttributeError:
+                return super().mouseMoveEvent(event)
             newPos    = self.mapFromGlobal(currPos + diff)
             self.move(newPos)
             self.__mouseMovePos = globalPos
         super().mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event: QMouseEvent):
-        if self.__mousePressPos is not None:
-            moved = event.globalPos() - self.__mousePressPos
-            if moved.manhattanLength() > 3:
-                event.ignore()
-                return
+        try:
+            if self.__mousePressPos is not None:
+                moved = event.globalPos() - self.__mousePressPos
+                if moved.manhattanLength() > 3:
+                    event.ignore()
+                    return
+        except AttributeError:
+            super().mouseReleaseEvent(event)
         super().mouseReleaseEvent(event)
