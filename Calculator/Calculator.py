@@ -11,7 +11,6 @@ from math import *
 import __Window__
 
 
-
 class Window(__Window__.Window):
     def __init__(self, App: QApplication):
         super().__init__('Translater', App, 400, 600)
@@ -19,15 +18,13 @@ class Window(__Window__.Window):
         self.load_gui()
         pass
 
-
     def get_result(self):
         text = self.line_edit.text()
         try:
-            result = eval(text)
+            result = eval(text.lower())  # Изменил text ->  text.lower()
         except:
             result = 'Упс...'
         self.line_edit.setText(str(result))
-
 
     def load_gui(self):
         self.main_layout = QVBoxLayout()
@@ -41,7 +38,6 @@ class Window(__Window__.Window):
         self.shadow_1 = QGraphicsDropShadowEffect()
         self.shadow_1.setBlurRadius(blur)
         self.shadow_1.setOffset(0, 0)
-        self.shadow_1.setBlurRadius
         self.shadow_1.setColor(QColor(0, 0, 0))
 
         self.shadow_2 = QGraphicsDropShadowEffect()
@@ -59,12 +55,6 @@ class Window(__Window__.Window):
         self.line_edit.returnPressed.connect(self.get_result)
         self.line_edit.setFocus()
         self.main_layout.addWidget(self.line_edit)
-        pass
-
-
-
-
-
 
 
 if __name__ == "__main__":
