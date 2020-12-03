@@ -19,14 +19,14 @@ class TitleButton(QPushButton):
 
         duration = 200
 
-        self.anim_font_size = QVariantAnimation()
-        self.anim_font_size.setStartValue(12.0)
-        self.anim_font_size.setEndValue(18.0)
-        self.anim_font_size.setDuration(duration)
-        self.anim_font_size.valueChanged.connect(self.resize_font)
+        self.anim_style = QVariantAnimation()
+        self.anim_style.setStartValue(QColor(40, 40, 40))
+        self.anim_style.setEndValue(QColor(40, 40, 40))
+        self.anim_style.setDuration(duration)
+        self.anim_style.valueChanged.connect(self.restyle)
         
         self.shadow = QGraphicsDropShadowEffect()
-        self.shadow.setColor(QColor(210, 150, 0))
+        self.shadow.setColor(QColor(0, 0, 0))
         self.shadow.setBlurRadius(0)
         self.shadow.setOffset(0, 0)
         self.setGraphicsEffect(self.shadow)
@@ -40,21 +40,26 @@ class TitleButton(QPushButton):
 
 
     def enterEvent(self, event: QEvent):
-        # self.anim_font_size.setDirection(QVariantAnimation.Forward)
-        # self.anim_font_size.start()
+        self.anim_style.setDirection(QVariantAnimation.Forward)
+        self.anim_style.start()
 
         self.anim_shadow.setDirection(QVariantAnimation.Forward)
         self.anim_shadow.start()
         return super().enterEvent(event)
 
     def leaveEvent(self, event: QEvent):
-        # self.anim_font_size.setDirection(QVariantAnimation.Backward)
-        # self.anim_font_size.start()
+        self.anim_style.setDirection(QVariantAnimation.Backward)
+        self.anim_style.start()
 
         self.anim_shadow.setDirection(QVariantAnimation.Backward)
         self.anim_shadow.start()
         return super().leaveEvent(event)
 
-    def resize_font(self, num: int):
-        self.setFont(QFont('oblique', num, QFont.Bold))
+    def restyle(self, color: QColor):
+        self.setStyleSheet(f'''
+            background-color: rgb({color.red()}, {color.green()}, {color.blue()});
+            border          : 0px solid rgb(30, 30, 30);
+            color           : rgb(210, 210, 210);
+            border-radius   : 10px;
+        ''')
         pass

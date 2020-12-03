@@ -41,24 +41,24 @@ if __name__ == "__main__":
             # window.show()
             # App.exec_()
 
-            # window = MainBlurWindow.BlurWindow(App=App)
-            # App.exec_()
+            window = MainBlurWindow.BlurWindow(App=App)
+            App.exec_()
             
-            # if window.MODULE:
-            #     if window.MODULE == 'TR':
-            #         window = Translater.Window(App=App)
-            #         App.exec_()
-            #     elif window.MODULE == 'SC':
-            #         window = ScreenClipperPro.Window(App=App)
-            #         App.exec_()
-            #     elif window.MODULE == 'CC':
-            #         window = Calculator.Window(App=App)
-            #         App.exec_()
-            #     elif window.MODULE == 'WV':
-            #         window = WebViewer.Window(App=App)
-            #         App.exec_()
-            window = WebViewer.Window(App=App)
-            App.exec_() 
+            if window.MODULE:
+                if window.MODULE == 'TR':
+                    window = Translater.Window(App=App)
+                    App.exec_()
+                elif window.MODULE == 'SC':
+                    window = ScreenClipperPro.Window(App=App)
+                    App.exec_()
+                elif window.MODULE == 'CC':
+                    window = Calculator.Window(App=App)
+                    App.exec_()
+                elif window.MODULE == 'WV':
+                    window = WebViewer.Window(App=App)
+                    App.exec_()
+            # window = WebViewer.Window(App=App)
+            # App.exec_() 
             break
 
         time.sleep(0.1)
