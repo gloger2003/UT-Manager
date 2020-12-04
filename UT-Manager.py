@@ -9,6 +9,7 @@
 """
 
 
+
 # Как работают Главные модули (ГМ):
 """
 
@@ -35,8 +36,24 @@
 
 
 
+# Как работают Блюр-окна (БО)
+"""
+Условия запуска:
+[ Нажатие пользователем соответствующей кнопки ]
 
-# Другие либки
+
+Наследование:
+[ __BlurWindow__ ]
+
+
+Описание чистого __BlurWindow__:
+[ Окно на весь экран с размытым изображением на заднем фоне и параллакс-эффектом ]
+
+"""
+
+
+
+# Вспомогательные либки
 import sys
 import time
 import keyboard
@@ -89,10 +106,6 @@ if __name__ == "__main__":
         
         if True:
             print('UT Manager')
-            # window = __Window__.Window('Window', App, 600, 400)
-
-            # window.show()
-            # App.exec_()
 
             window = MainBlurWindow.BlurWindow(App=App)
             App.exec_()
