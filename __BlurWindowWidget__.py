@@ -9,12 +9,6 @@ class BlurWindowWidget(QFrame):
         self.setStyleSheet('background-color: rgb(50, 50, 50); border: 1px solid rgb(50, 50, 50); border-radius: 15px')
         self.setMouseTracking(True)
 
-        # self.shadow = QGraphicsDropShadowEffect()
-        # self.shadow.setColor(QColor(0, 0, 0))
-        # self.shadow.setOffset(0, 0)
-        # self.shadow.setBlurRadius(0)
-        # self.setGraphicsEffect(self.shadow)
-
         self.anim_border = QVariantAnimation()
         self.anim_border.setStartValue(QColor(50, 50, 50))
         self.anim_border.setEndValue(QColor(60, 250, 20))

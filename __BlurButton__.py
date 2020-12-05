@@ -8,7 +8,7 @@ import __StyleSetter__
 class Button(QPushButton):
     def __init__(self, parent=None, text='TEXT'):
         super().__init__(parent=parent)
-        self.background_color_style = 'rgba(50, 50, 50, 250)'
+        self.background_color_style = 'rgba(50, 50, 50, 255)'
         self.setStyleSheet(f'background-color: {self.background_color_style}; color: white; border-radius: 10px; border: 1px solid rgb(30, 30, 30)')
         self.setText(text)
         # self.setMinimumSize(100, 50)

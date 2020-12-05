@@ -43,7 +43,7 @@ class BlurWindow(__BlurWindow__.BlurWindow):
         self.info_label.setMouseTracking(True)
         self.button_layout.addWidget(self.info_label)
 
-        self.screenclipper_button = __BlurButton__.Button(self, 'Скриншотер {PRINTSCREEN}')
+        self.screenclipper_button = __BlurButton__.Button(self, 'Скриншотер')
         self.screenclipper_button.clicked.connect(lambda: self.hide('SC'))
         self.button_layout.addWidget(self.screenclipper_button)
 
@@ -59,14 +59,13 @@ class BlurWindow(__BlurWindow__.BlurWindow):
         self.webviewer_button.clicked.connect(lambda: self.hide('WV'))
         self.button_layout.addWidget(self.webviewer_button)
 
-        self.exit_button = __BlurButton__.Button(self, 'Закрыть {ESC}')
+        self.exit_button = __BlurButton__.Button(self, 'Закрыть')
         self.exit_button.clicked.connect(self.hide)
         self.button_layout.addWidget(self.exit_button)
         pass
 
     def load_noteser_layout(self):
         self.noteser_layout = QVBoxLayout()
-        # self.noteser_layout.setAlignment(Qt.AlignCenter)
         self.main_layout.addLayout(self.noteser_layout)
 
         self.noteser_blur_widget = Noteser.Noteser(self)

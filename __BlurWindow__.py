@@ -3,7 +3,6 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 
-
 class BlurWindow(QMainWindow):
     MODULE = False
 
@@ -34,12 +33,6 @@ class BlurWindow(QMainWindow):
         self.image_label.setAlignment(Qt.AlignCenter)
         # self.image_label.setScaledContents(True)
         self.setCentralWidget(self.image_label)
-
-        self.blur = QGraphicsBlurEffect()
-        # self.blur.setBlurRadius(50)
-        self.blur.setBlurRadius(0)
-        # self.blur.setBlurHints(QGraphicsBlurEffect.QualityHint)
-        self.image_label.setGraphicsEffect(self.blur)
 
         self.front = QWidget(self)
         self.front.setStyleSheet('''
@@ -123,9 +116,10 @@ class BlurWindow(QMainWindow):
         pass
 
     def move_image(self, x: int, y: int):
+        move_speed = 0.05
         self.image = self.source_image.copy(QRect(
-                self.image.rect().x() + int(x * 0.03),
-                self.image.rect().y() + int(y * 0.03),
+                self.image.rect().x() + int(x * move_speed),
+                self.image.rect().y() + int(y * move_speed),
                 self.image.width(),
                 self.image.height()
             )
