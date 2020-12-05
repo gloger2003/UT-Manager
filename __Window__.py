@@ -73,19 +73,11 @@ class Window(QMainWindow):
         ''')
         self.setCentralWidget(self.main_frame)
 
-
-        # from qstylizer import parser
-
-        # qss = parser.parse(self.main_frame.styleSheet())
-        # qss.QFrame.backgroundColor.setValue((4, 4, 4,))
-        # print(qss.toString())
-        # self.main_frame.setStyleSheet(qss.toString())
-
-        self.anim = QVariantAnimation()
-        self.anim.setStartValue(0.001)
-        self.anim.setEndValue(1.0)
-        self.anim.setDuration(500)
-        self.anim.valueChanged.connect(self.setWindowOpacity)
+        self.anim_opacity = QVariantAnimation()
+        self.anim_opacity.setStartValue(0.001)
+        self.anim_opacity.setEndValue(1.0)
+        self.anim_opacity.setDuration(500)
+        self.anim_opacity.valueChanged.connect(self.setWindowOpacity)
 
         self.anim_size = QVariantAnimation()
         self.anim_size.setStartValue(QSize(0, 0))
@@ -102,8 +94,8 @@ class Window(QMainWindow):
 
 
     def show(self):
-        self.anim.setDirection(QVariantAnimation.Forward)
-        self.anim.start()
+        self.anim_opacity.setDirection(QVariantAnimation.Forward)
+        self.anim_opacity.start()
 
         self.anim_size.setDirection(QVariantAnimation.Forward)
         self.anim_size.start()
@@ -113,8 +105,8 @@ class Window(QMainWindow):
         super().show()
 
     def hide(self):
-        self.anim.setDirection(QVariantAnimation.Backward)
-        self.anim.start()
+        self.anim_opacity.setDirection(QVariantAnimation.Backward)
+        self.anim_opacity.start()
 
         self.anim_size.setDirection(QVariantAnimation.Backward)
         self.anim_size.start()
@@ -125,6 +117,8 @@ class Window(QMainWindow):
         self.anim_move.start()
 
     def setWindowOpacity(self, level):
+        # Как только opacity становиться меньше 0.01, программа завершает цикл, окно закрывается
+        # Продолжает свою работу основной цикл
         if level <= 0.01:
             self.close()
             self.App.quit()

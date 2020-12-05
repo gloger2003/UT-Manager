@@ -1,19 +1,15 @@
-import sys
-import keyboard
-
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 
 
-class Window(QMainWindow):
+class BlurWindow(QMainWindow):
     MODULE = False
 
     def __init__(self, App: QApplication):
         super().__init__()
-        self.App = App
-
+        self.App    = App
         self.module = False
         
         scale = 200
@@ -40,7 +36,8 @@ class Window(QMainWindow):
         self.setCentralWidget(self.image_label)
 
         self.blur = QGraphicsBlurEffect()
-        self.blur.setBlurRadius(50)
+        # self.blur.setBlurRadius(50)
+        self.blur.setBlurRadius(0)
         # self.blur.setBlurHints(QGraphicsBlurEffect.QualityHint)
         self.image_label.setGraphicsEffect(self.blur)
 
@@ -94,9 +91,10 @@ class Window(QMainWindow):
         self.anim_opacity.setDuration(200)
         self.anim_opacity.valueChanged.connect(self.setWindowOpacity)
         
-        
         self.front.setMouseTracking(True)
         self.front.mouseMoveEvent = self.mouseMove
+        
+        self.move_image(self.cursor().pos().x(), self.cursor().pos().y())
         pass
 
 
@@ -116,22 +114,27 @@ class Window(QMainWindow):
         self.anim_opacity.setDirection(QVariantAnimation.Forward)
         self.anim_opacity.start()
         super().show()
+        pass
 
     def hide(self, module=False):
         self.MODULE = module
         self.anim_opacity.setDirection(QVariantAnimation.Backward)
         self.anim_opacity.start()
+        pass
 
-    def mouseMove(self, event: QMouseEvent):
+    def move_image(self, x: int, y: int):
         self.image = self.source_image.copy(QRect(
-                self.image.rect().x() + int(event.x() * 0.03),
-                self.image.rect().y() + int(event.y() * 0.03),
+                self.image.rect().x() + int(x * 0.03),
+                self.image.rect().y() + int(y * 0.03),
                 self.image.width(),
                 self.image.height()
             )
         )
         self.image_label.setPixmap(self.image)
+        pass
+
+    def mouseMove(self, event: QMouseEvent):
+        self.move_image(event.x(), event.y())
         # print(self.image.size())
         # return super().mouseMoveEvent(event)
-
     
