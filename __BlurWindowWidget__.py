@@ -2,10 +2,15 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+from __DataManager__ import DataManager
+
+
 
 class BlurWindowWidget(QFrame):
-    def __init__(self, parent: QWidget):
+    def __init__(self, parent: QWidget, Data: DataManager.DataManager):
         super().__init__(parent=parent)
+        self.Data = Data
+
         self.setStyleSheet('background-color: rgb(50, 50, 50); border: 1px solid rgb(50, 50, 50); border-radius: 15px')
         self.setMouseTracking(True)
 

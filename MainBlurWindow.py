@@ -7,13 +7,13 @@ import __BlurWindow__
 import __BlurButton__
 
 from Noteser import Noteser
+from __DataManager__ import DataManager
 
 
-
-class BlurWindow(__BlurWindow__.BlurWindow):
+class MainBlurWindow(__BlurWindow__.BlurWindow):
     MODULE = False
-    def __init__(self, App: QApplication):
-        super().__init__(App)
+    def __init__(self, App: QApplication, Data: DataManager.DataManager):
+        super().__init__(App, Data)
         self.load_gui()
         self.show()
         pass
@@ -22,7 +22,7 @@ class BlurWindow(__BlurWindow__.BlurWindow):
         self.fast_menu_layout = QVBoxLayout()
         self.main_layout.addLayout(self.fast_menu_layout)
 
-        self.fast_menu_blur_widget = Noteser.Noteser(self)
+        self.fast_menu_blur_widget = Noteser.Noteser(self, self.Data)
         self.fast_menu_blur_widget.setMaximumHeight(self.WIDTH // 2)
         self.fast_menu_layout.addWidget(self.fast_menu_blur_widget)
         pass
@@ -68,7 +68,7 @@ class BlurWindow(__BlurWindow__.BlurWindow):
         self.noteser_layout = QVBoxLayout()
         self.main_layout.addLayout(self.noteser_layout)
 
-        self.noteser_blur_widget = Noteser.Noteser(self)
+        self.noteser_blur_widget = Noteser.Noteser(self, self.Data)
         self.noteser_blur_widget.setMaximumHeight(self.WIDTH // 2)
         self.noteser_layout.addWidget(self.noteser_blur_widget)
         pass

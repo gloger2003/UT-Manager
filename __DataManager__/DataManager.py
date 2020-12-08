@@ -1,65 +1,32 @@
 import sqlite3
 import datetime
+import json
+
+from . import CONSTANTS as const
+from . import __Settings__
+
 
 
 class DataManager:
     def __init__(self):
-        self.connect = sqlite3.connect("Data.sqlite")  # Подключение к БД
+        self.__data__ = const.DATA
+        self.__data__ = self.__getDataFromJson__()
+        self.Settings = __Settings__.Settings(self.__data__['Settings'])
 
 
-    def get_settings_dict(self):
-        """Метод возвращает настройки в виде словаря"""
-        pass
+    def __getDataFromJson__(self):
+        """Получает данные из файла"""
+        # data = const.DATA
+        data = self.__data__
+        try:
+            with open(const.FILENAME, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except FileNotFoundError or json.decoder.JSONDecodeError:
+            self.save()
+        return data
 
 
-    def add_event(self, message, date_event, state=False):
-        """Метод добавляет события по нескольким параметрам в таблицу"""
-
-        cur = self.connect.cursor()  # Курсор БД
-
-        # Обрабатываем дату под европейский формат
-        date_create = '.'.join(str(datetime.date.today()).split('-')[::-1])
-
-        # Вносим информацию о событие в БД
-        cur.execute("""INSERT INTO event(date_create, date_event, message, state)
-                       VALUES(?, ?, ?, ?)""",
-                    (date_create, date_event, message, state))
-
-        self.connect.commit()
-        pass
-
-
-    def get_notes(self, ):
-        return {'1': {'date_create': '21.01.2020','date_event': '22.01.2020','message': 'Нужно что-то сделать','state': True},
-
-                '2': {'date_create': '21.01.2020','date_event': '22.01.2020','message': 'Нужно что-то сделать','state': True},
-
-                '3': {'date_create': '21.01.2020','date_event' : '22.01.2020','message': 'Нужно что-то сделать','state': True}}
-
-
-"""
-
-Data.get_notes() => notes {
-    '1': {
-        'date_create': '21.01.2020',
-        'date_event' : '22.01.2020',
-        'message'    : 'Нужно что-то сделать',
-        'state'      : True
-    },
-
-    '2': {
-        'date_create': '21.01.2020',
-        'date_event' : '22.01.2020',
-        'message'    : 'Нужно что-то сделать',
-        'state'      : True
-    },
-
-    '3': {
-        'date_create': '21.01.2020',
-        'date_event' : '22.01.2020',
-        'message'    : 'Нужно что-то сделать',
-        'state'      : True
-    }
-}
-
-"""
+    def save(self):
+        """Сохраняет все данные в файл или Создаёт новый файл с шаблоном"""
+        with open(const.FILENAME, 'w', encoding='utf-8') as f:
+            json.dump(self.__data__, f)

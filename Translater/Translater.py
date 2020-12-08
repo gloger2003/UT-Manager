@@ -12,11 +12,12 @@ from googletrans import Translator
 import __Window__
 from .__Button__ import Button
 
+from __DataManager__ import DataManager
 
 
 class Window(__Window__.Window):
-    def __init__(self, App: QApplication):
-        super().__init__('Translater', App, 600, 400)
+    def __init__(self, App: QApplication, Data: DataManager.DataManager):
+        super().__init__('Translater', App, Data, 600, 400)
 
         win32clipboard.OpenClipboard()
         self.clipboard_text = ''

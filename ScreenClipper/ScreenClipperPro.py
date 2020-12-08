@@ -9,11 +9,14 @@ from PIL import Image
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtCore import *
 
+from __DataManager__ import DataManager
+
 
 class Window(QtWidgets.QWidget):
-    def __init__(self, App=QApplication):
+    def __init__(self, App: QApplication, Data: DataManager.DataManager):
         super().__init__()
-        self.App = App
+        self.App  = App
+        self.Data = Data
         
         self.desktop = QtWidgets.QDesktopWidget()
         self.WIDTH   = self.desktop.width()

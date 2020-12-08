@@ -2,12 +2,14 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-
+from __DataManager__ import DataManager
 
 
 class Window(QMainWindow):
-    def __init__(self, name: str, App: QApplication, w: int, h: int):
+    def __init__(self, name: str, App: QApplication, Data: DataManager.DataManager, w: int, h: int):
         super().__init__()
+        self.Data = Data
+
         self.w_ = w
         self.h_ = h
         

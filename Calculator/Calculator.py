@@ -9,11 +9,11 @@ from math import *
 
 
 import __Window__
-
+from __DataManager__ import DataManager
 
 class Window(__Window__.Window):
-    def __init__(self, App: QApplication):
-        super().__init__('Translater', App, 400, 600)
+    def __init__(self, App: QApplication, Data: DataManager.DataManager):
+        super().__init__('Translater', App, Data, 400, 600)
         self.show()
         self.load_gui()
         pass

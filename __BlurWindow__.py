@@ -2,14 +2,16 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+from __DataManager__ import DataManager
 
 class BlurWindow(QMainWindow):
     MODULE = False
 
-    def __init__(self, App: QApplication):
+    def __init__(self, App: QApplication, Data: DataManager.DataManager):
         super().__init__()
         self.App    = App
         self.module = False
+        self.Data   = Data
         
         scale = 200
         self.desktop = QDesktopWidget()

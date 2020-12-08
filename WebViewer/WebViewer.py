@@ -5,14 +5,16 @@ from PyQt5.QtWidgets import *
 import __Window__
 from . import  __TitleButton__
 
+from __DataManager__ import DataManager
+
 
 
 class Window(__Window__.Window):
-    def __init__(self, App: QApplication):
+    def __init__(self, App: QApplication, Data: DataManager.DataManager):
         screen = QDesktopWidget()
         w = screen.width()
         h = screen.height()
-        super().__init__('WebViewer', App, w, h)
+        super().__init__('WebViewer', App, Data, w, h)
         
         self.show()
         self.load_gui()

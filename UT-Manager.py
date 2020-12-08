@@ -105,6 +105,7 @@ from PyQt5.QtWidgets import *
 
 # Модуль Главного окна UT-Manager
 import MainBlurWindow
+from __DataManager__ import DataManager
 
 
 # Если этот скрипт является основным (а не модулем), то импортируются ГМ и запускается цикл
@@ -129,42 +130,42 @@ if __name__ == "__main__":
                     # WV - WebViewer
     # =============================================================================
 
+    Data = DataManager.DataManager()
+
 
     # Основной цикл, его задача отслеживать нажатия клавиш в фоне (задержка 0.1 сек, чтобы не нагружать ЦП)
     while True:
         if keyboard.is_pressed('ctrl+c+shift'):
             print('Translater')
-            window = Translater.Window(App=App)
+            window = Translater.Window(App=App, Data = Data)
             App.exec_()
             break
 
         if keyboard.is_pressed('prnt scrn'):
             print('ScreenClipper')
-            window = ScreenClipperPro.Window(App=App)
+            window = ScreenClipperPro.Window(App=App, Data = Data)
             App.exec_()
             break
         
         if True:
             print('UT Manager')
 
-            window = MainBlurWindow.BlurWindow(App=App)
+            window = MainBlurWindow.MainBlurWindow(App=App, Data = Data)
             App.exec_()
             
             if window.MODULE: # Если MODULE не False, то:
                 if window.MODULE == 'TR':
-                    window = Translater.Window(App=App)
+                    window = Translater.Window(App=App, Data = Data)
                     App.exec_()
                 elif window.MODULE == 'SC':
-                    window = ScreenClipperPro.Window(App=App)
+                    window = ScreenClipperPro.Window(App=App, Data = Data)
                     App.exec_()
                 elif window.MODULE == 'CC':
-                    window = Calculator.Window(App=App)
+                    window = Calculator.Window(App=App, Data = Data)
                     App.exec_()
                 elif window.MODULE == 'WV':
-                    window = WebViewer.Window(App=App)
+                    window = WebViewer.Window(App=App, Data = Data)
                     App.exec_()
-            # window = WebViewer.Window(App=App)
-            # App.exec_() 
             break
 
         time.sleep(0.1)
