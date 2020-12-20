@@ -37,7 +37,7 @@ class MainBlurWindow(__BlurWindow__.BlurWindow):
         self.info_label = QLabel(self)
         self.info_label.setStyleSheet('background-color: rgba(0, 0, 0, 0); color: rgb(230, 115, 0); border: 0px; border-radius: 10px')
         self.info_label.setAlignment(Qt.AlignCenter)
-        self.info_label.setText('UT-Manager v0.2.8b')
+        self.info_label.setText('UT-Manager v0.2.9b')
         self.info_label.setFont(QFont('oblique', 20, QFont.Bold))
         self.info_label.setMinimumHeight(50)
         self.info_label.setMouseTracking(True)
